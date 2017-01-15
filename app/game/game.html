@@ -1,1 +1,45 @@
-game.html
+<br><div class="container">
+    <div class="well">
+        <h2 style="text-align: center;"><img src="{{gameCtrl.logo[gameCtrl.teamIndex].WikipediaLogoUrl}}" height="70px;">  {{gameCtrl.logo[gameCtrl.teamIndex].FullName}}</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Information</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Head Coach</td>
+                    <td>{{gameCtrl.logo[gameCtrl.teamIndex].HeadCoach}}</td>
+                </tr>
+                <tr>
+                    <td>Defensive Coordinator</td>
+                    <td>{{gameCtrl.logo[gameCtrl.teamIndex].DefensiveCoordinator}}</td>
+                </tr>
+                <tr>
+                    <td>Offensive Coordinator</td>
+                    <td>{{gameCtrl.logo[gameCtrl.teamIndex].OffensiveCoordinator}}</td>
+                </tr>
+                <tr>
+                    <td>Special Teams Coach</td>
+                    <td>{{gameCtrl.logo[gameCtrl.teamIndex].SpecialTeamsCoach}}</td>
+                </tr>
+                <tr>
+                    <td>Conference</td>
+                    <td>{{gameCtrl.logo[gameCtrl.teamIndex].Conference}}</td>
+                </tr>
+                <tr>
+                    <td>Stadium Name</td>
+                    <td>{{gameCtrl.logo[gameCtrl.teamIndex].StadiumDetails.Name}}</td>
+                </tr>
+                <tr>
+                    <td>Stadium Capacity</td>
+                    <td>{{gameCtrl.logo[gameCtrl.teamIndex].StadiumDetails.Capacity}}</td>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button ui-sref="home" class="btn-info btn" align="center">Back to scores</button>
+    </div>
+</div>

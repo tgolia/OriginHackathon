@@ -5,26 +5,39 @@
         .module('app')
         .controller('GameController', GameController);
 
-    GameController.$inject = ['nflFactory', 'logoFactory', '$http', '$stateParams'];
+    GameController.$inject = ['nflFactory', 'logoFactory', '$http', '$stateParams', '$timeout'];
 
     /* @ngInject */
-    function GameController(nflFactory, logoFactory, $http, $stateParams) {
+    function GameController(nflFactory, logoFactory, $http, $stateParams, $timeout) {
         var vm = this;
         vm.title = 'GameController';
 
-        vm.game = [];
+        vm.logo = [];
+        vm.teamIndex;
 
         activate();
 
         ////////////////
 
         function activate() {
-        	nflFactory
-        		.getActualScores($stateParams.id)
-        		.then(function(response) {
-        			vm.game = response.data;
-        			console.log(vm.game);
-        		})
+        	logoFactory
+                .teamLogo()
+                .then(function(response) {
+                    vm.logo = response.data;
+                    console.log(response.data)
+                });
+                grabTeamDetails();
+        } 
+
+    	function grabTeamDetails() {
+    		$timeout(function() {
+		    	for (var i=0;i<vm.logo.length;i++) {
+		    		if ($stateParams.id == vm.logo[i].Key) {
+		    			vm.teamIndex = i;
+		    			console.log(vm.teamIndex);
+		    		}
+				}
+    		}, 500);
         }
-    }
+}
 })();

@@ -1,19 +1,34 @@
 <div class="container">
+    <br>
+    <br>
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <h3 class="panel-title">NFL</h3>
+            <h3 class="panel-title text-center">NFL<img src="nfllogo.png" style="max-height: 35px; "></h3>
         </div>
-        <div ng-repeat="nflGame in homeCtrl.nflGames.games" class="panel-body" ng-init="homeCtrl.callWeatherApi(nflGame.venue.city); homeCtrl.grabTeamDetails(nflGame.home, nflGame.away, nflGame.id)" ui-sref="game">
+        <br>
+        <div class="row" align="center">
+            <span>Year: </span><input type="text" placeholder="2016" ng-model="homeCtrl.year"></input>
+            <span>Season: </span>
+            <select ng-model="homeCtrl.season">
+                <option value="PRE">Preseason</option>
+                <option value="REG">Regular Season</option>
+                <option value="PST">Postseason</option>
+            </select> 
+            <span>Week: </span><input type="text" ng-model="homeCtrl.week"></input>
+            <button class="btn-success btn" ng-click="homeCtrl.getStuff(); search=true">Go!</button>
+        </div>
+        <br>
+        <div ng-show="search" ng-repeat="nflGame in homeCtrl.nflGames.games" class="panel-body" ng-init="homeCtrl.callWeatherApi(nflGame.venue.city); homeCtrl.grabTeamDetails(nflGame.home, nflGame.away)">
             <table class="table table-striped table-hover">
-            <th>City: {{nflGame.venue.city}}</th>
-            <th>Weather: {{homeCtrl.cityWeather[$index].condition}} <img src="{{homeCtrl.cityWeather[$index].icon}}" alt=""></th>
-            <th>Temperature: {{homeCtrl.cityWeather[$index].temp}}&#8457;</th>
-                <tr>
+                <th style="vertical-align: middle; text-align: center">City: {{nflGame.venue.city}}</th>
+                <th style="vertical-align: middle; text-align: center">Weather: {{homeCtrl.cityWeather[$index].condition}} <img src="{{homeCtrl.cityWeather[$index].icon}}" alt=""></th>
+                <th style="vertical-align: middle; text-align: center">Temperature: {{homeCtrl.cityWeather[$index].temp}}&#8457;</th>
+                <tr ui-sref="game({id:nflGame.away})">
                     <td class="col-md-2" style="cursor: pointer; background: #{{homeCtrl.nflGameDetails[$index].awayColor}}; color: white;"><img src={{homeCtrl.nflGameDetails[$index].awayLogo}} style="max-height: 25px; width: 25px;"></td>
                     <td class="col-md-6" style="cursor: pointer; background: #{{homeCtrl.nflGameDetails[$index].awayColor}}; color: white;">{{homeCtrl.nflGameDetails[$index].awayName}}</td>
                     <td class="col-md-2" style="text-align: center">{{homeCtrl.nflGameDetails[$index].awayPoints}}</td>
                 </tr>
-                <tr>
+                <tr ui-sref="game({id:nflGame.home})">
                     <td class="col-md-2" style="cursor: pointer; background: #{{homeCtrl.nflGameDetails[$index].homeColor}}; color: white;"><img src={{homeCtrl.nflGameDetails[$index].homeLogo}} style="max-height: 25px; width: 25px"></td>
                     <td class="col-md-6" style="cursor: pointer; background: #{{homeCtrl.nflGameDetails[$index].homeColor}}; color: white;">{{homeCtrl.nflGameDetails[$index].homeName}}</td>
                     <td class="col-md-2" style="text-align: center">{{homeCtrl.nflGameDetails[$index].homePoints}}</td>

@@ -5,10 +5,10 @@
         .module('app')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['nbaFactory', 'nflFactory', 'logoFactory', '$http', '$timeout'];
+    HomeController.$inject = ['nbaFactory', 'nflFactory', 'logoFactory', '$http', '$timeout', '$state', '$stateParams'];
 
     /* @ngInject */
-    function HomeController(nbaFactory, nflFactory, logoFactory, $http, $timeout) {
+    function HomeController(nbaFactory, nflFactory, logoFactory, $http, $timeout, $state, $stateParams) {
         var vm = this;
         vm.title = 'HomeController';
 
@@ -21,6 +21,8 @@
         vm.nflGameDetails = [];   
         vm.grabTeamDetails = grabTeamDetails;
         //vm.randomFootballScore = randomFootballScore;
+        vm.reloadPage = reloadPage;
+        vm.getStuff = getStuff;
 
         activate();
 
@@ -36,8 +38,11 @@
             //        .catch(function(error) {
             //            console.log('failed to load nba games');
             //        });
-            nflFactory
-                .getScores('2016', 'PST', '2')
+        }
+
+        function getStuff() {
+        	nflFactory
+                .getScores(vm.year, vm.season, vm.week)
                 .then(function(response) {
                     vm.nflGames = response.data;
                     console.log(vm.nflGames);
@@ -48,9 +53,6 @@
                     vm.logo = response.data;
                     console.log(response.data)
                 });
-
-
-
         }
 
         function callWeatherApi(city) {
@@ -85,7 +87,7 @@
         	});
         }
 
-        function grabTeamDetails(home, away, gameId) {
+        function grabTeamDetails(home, away) {
         	for (var i=0;i<vm.logo.length;i++) {
         		if (home == vm.logo[i].Key) {
         			var homeName = vm.logo[i].FullName;
@@ -123,9 +125,9 @@
 			console.log(vm.nflGameDetails);
         }
 
-        // function randomFootballScore() {
-        // 	var r = Math.floor((Math.random() * 40) + 3);
-        // 	return r;
-        // }
+        function reloadPage() {
+        	$state.reload();
+        }
+
     }
 })();
